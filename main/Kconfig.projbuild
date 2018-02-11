@@ -33,7 +33,7 @@ config EXAMPLE_DISPLAY_TYPE
 
     choice
         prompt "Select predefined display configuration"
-        default EXAMPLE_DISPLAY_TYPE0
+        default EXAMPLE_DISPLAY_TYPE3
         help
             Select predefined display configuration
     

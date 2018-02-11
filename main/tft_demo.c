@@ -437,7 +437,7 @@ static void font_demo()
 		for (int f=DEFAULT_FONT; f<FONT_7SEG; f++) {
 			_fg = random_color();
 			TFT_setFont(f, NULL);
-			TFT_print("Welcome to ESP32", 4, y);
+			TFT_print("Welcome to M5Stack", 4, y);
 			y += TFT_getfontheight() + 4;
 			n++;
 		}
@@ -460,7 +460,7 @@ static void font_demo()
 			n = 0;
 			while ((clock() < end_time) && (Wait(0))) {
 				_fg = random_color();
-				TFT_print("Welcome to ESP32\nThis is user font.", 0, 8);
+				TFT_print("Welcome to M5Stack\nThis is user font.", 0, 8);
 				n++;
 			}
 			if ((_width < 240) || (_height < 240)) TFT_setFont(DEF_SMALL_FONT, NULL);
@@ -488,7 +488,7 @@ static void font_demo()
 			y = rand_interval(0, (dispWin.y2-dispWin.y1)-TFT_getfontheight()-2);
 			font_rotate = rand_interval(0, 359);
 
-			TFT_print("Welcome to ESP32", x, y);
+			TFT_print("Welcome to M5Stack", x, y);
 			n++;
 		}
 	}
@@ -559,7 +559,7 @@ static void font_demo()
 	n = 0;
 	while ((clock() < end_time) && (Wait(0))) {
 		_fg = random_color();
-		TFT_print("This text is printed inside the window.\nLong line can be wrapped to the next line.\nWelcome to ESP32", 0, 0);
+		TFT_print("This text is printed inside the window.\nLong line can be wrapped to the next line.\nWelcome to M5Stack", 0, 0);
 		n++;
 	}
 	text_wrap = 0;
@@ -1040,17 +1040,17 @@ void tft_demo() {
             sprintf(dtype, "Unknown");
     }
     
-    uint8_t disp_rot = PORTRAIT;
+    uint8_t disp_rot = LANDSCAPE;
 	_demo_pass = 0;
 	gray_scale = 0;
 	doprint = 1;
 
 	TFT_setRotation(disp_rot);
-	disp_header("ESP32 TFT DEMO");
+	disp_header("M5Stack TFT DEMO");
 	TFT_setFont(COMIC24_FONT, NULL);
 	int tempy = TFT_getfontheight() + 4;
 	_fg = TFT_ORANGE;
-	TFT_print("ESP32", CENTER, (dispWin.y2-dispWin.y1)/2 - tempy);
+	TFT_print("M5Stack", CENTER, (dispWin.y2-dispWin.y1)/2 - tempy);
 	TFT_setFont(UBUNTU16_FONT, NULL);
 	_fg = TFT_CYAN;
 	TFT_print("TFT Demo", CENTER, LASTY+tempy);
@@ -1093,7 +1093,7 @@ void tft_demo() {
 					dtype, tmp_buff, _width, _height, ((gray_scale) ? "Gray" : "Color"));
 		}
 
-		disp_header("Welcome to ESP32");
+		disp_header("Welcome to M5Stack");
 
 		test_times();
 		font_demo();
@@ -1132,9 +1132,9 @@ void tft_demo() {
 // With this mapping, SD card can be used both in SPI and 1-line SD mode.
 // Note that a pull-up on CS line is required in SD mode.
 #define sdPIN_NUM_MISO 19
-#define sdPIN_NUM_MOSI 18
-#define sdPIN_NUM_CLK  5
-#define sdPIN_NUM_CS   14
+#define sdPIN_NUM_MOSI 23
+#define sdPIN_NUM_CLK  18
+#define sdPIN_NUM_CS   4
 
 static const char *TAG = "SDCard test";
 
@@ -1246,33 +1246,6 @@ void app_main()
     // ========  PREPARE DISPLAY INITIALIZATION  =========
 
     esp_err_t ret;
-
-    // === SET GLOBAL VARIABLES ==========================
-
-    // ===================================================
-    // ==== Set display type                         =====
-    tft_disp_type = DEFAULT_DISP_TYPE;
-	//tft_disp_type = DISP_TYPE_ILI9341;
-	//tft_disp_type = DISP_TYPE_ILI9488;
-	//tft_disp_type = DISP_TYPE_ST7735B;
-    // ===================================================
-
-	// ===================================================
-	// === Set display resolution if NOT using default ===
-	// === DEFAULT_TFT_DISPLAY_WIDTH &                 ===
-    // === DEFAULT_TFT_DISPLAY_HEIGHT                  ===
-	_width = DEFAULT_TFT_DISPLAY_WIDTH;  // smaller dimension
-	_height = DEFAULT_TFT_DISPLAY_HEIGHT; // larger dimension
-	//_width = 128;  // smaller dimension
-	//_height = 160; // larger dimension
-	// ===================================================
-
-	// ===================================================
-	// ==== Set maximum spi clock for display read    ====
-	//      operations, function 'find_rd_speed()'    ====
-	//      can be used after display initialization  ====
-	max_rdclock = 8000000;
-	// ===================================================
 
     // ====================================================================
     // === Pins MUST be initialized before SPI interface initialization ===
@@ -1400,7 +1373,7 @@ void app_main()
 	font_forceFixed = 0;
 	gray_scale = 0;
     TFT_setGammaCurve(DEFAULT_GAMMA_CURVE);
-	TFT_setRotation(PORTRAIT);
+	TFT_setRotation(LANDSCAPE);
 	TFT_setFont(DEFAULT_FONT, NULL);
 	TFT_resetclipwin();
 
